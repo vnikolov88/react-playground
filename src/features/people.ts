@@ -13,7 +13,7 @@ export type GetPersonByIdResponse = {
 
 export const upsertPerson = async (person: PersonUpsertRequest) => {
   // ...
-  return Promise.resolve();
+  return Promise.resolve(); 
 };
 
 export type PersonUpsertRequest = {

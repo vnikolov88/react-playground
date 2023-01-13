@@ -15,13 +15,8 @@ const EditProjectPage = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline text-blue-500">
-        Edit Project
-      </h1>
-      <div className="mt-4">
-        <ProjectForm project={data} />
-      </div>
+    <div className="mt-4">
+      <ProjectForm project={data} />
     </div>
   );
 };
