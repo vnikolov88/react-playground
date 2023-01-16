@@ -1,11 +1,35 @@
+import { useEffect, useState } from "react";
+import { deleteProject, GetProjectByIdResponse, getProjecyById } from "../features/project";
 
 export const useProject = (id?: string) => {
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [project, setProject] = useState<GetProjectByIdResponse>();
+  
+  useEffect(() => {
+    if (!id)
+      return;
+
+    const fetchData = async () => {
+      setProject(await getProjecyById(id));
+    };
+
+    fetchData();
+  }, [id]);
+
+  const deleteProj = (id: string) => {
+    deleteProject(id).catch((error) => {
+      setError(error);
+    });
+  };
+
+
   return {
-    data: {
-      id: "1",
-      name: 'Project 1',
-    },
-    isLoading: false,
-    error: null as Error | null,
-  }
+    deleteProj,
+    data: project,
+    isLoading,
+    error
+  };
+ 
+
 }
