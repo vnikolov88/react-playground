@@ -3,13 +3,11 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline text-blue-500">
-        Projects
-      </h1>
-      <div className="bg-slate-500">
+      <div className="mt-4">
         <Outlet />
       </div>
     </div>
+    
   );
 };
 

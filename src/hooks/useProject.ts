@@ -1,35 +1,41 @@
+import { createOrEditProject } from './../features/project';
 import { useEffect, useState } from "react";
-import { deleteProject, GetProjectByIdResponse, getProjecyById } from "../features/project";
+import { GetProjectByIdResponse, getProjecyById } from "../features/project";
 
 export const useProject = (id?: string) => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [project, setProject] = useState<GetProjectByIdResponse>();
-  
+
   useEffect(() => {
     if (!id)
       return;
 
     const fetchData = async () => {
+      setIsLoading(true);
       setProject(await getProjecyById(id));
+      setIsLoading(false);
     };
 
     fetchData();
   }, [id]);
 
-  const deleteProj = (id: string) => {
-    deleteProject(id).catch((error) => {
+  const upsertProject = async (project: {
+    id?: string;
+    name: string;
+    color: string;
+  }) => {
+    setIsLoading(true);
+    createOrEditProject(project).catch((error) => {
       setError(error);
     });
+    setIsLoading(false);
   };
-
 
   return {
-    deleteProj,
-    data: project,
+    upsertProject,
     isLoading,
+    data: project,
     error
   };
- 
-
 }

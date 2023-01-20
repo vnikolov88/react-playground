@@ -1,18 +1,27 @@
+
+
 export const getProjecyById = async (id: string): Promise<GetProjectByIdResponse> => {
     //TODO get from backend
     return {
       id: "1",
       name: "Person 1",
-      beginDate: "",
+      color: "0000",
     };
   }
   
-  export type GetProjectByIdResponse = {
+  export interface ProjectRequest {
+    id?: string;
+    name: string;
+    color: string
+  }
+  
+  export interface  GetProjectByIdResponse {
     id: string;
     name: string;
-    beginDate: String;
-    endDate?: String;
+    color: string
   };
+
+ 
 
 export const getProjectList = async (page: number, size: number) : Promise<ProjectListresponse> =>{
 
@@ -21,27 +30,33 @@ export const getProjectList = async (page: number, size: number) : Promise<Proje
             {
                 id: "1",
                 name: "Project 1",
-                beginDate: ""
+                color: "000"
             },
             {
                 id: "2",
                 name: "project 4",
-                beginDate: ""
+                color: "000"
             },
             {
                 id: "3",
                 name: "project 5",
-                beginDate: ""
+                color: "000"
             },
         ],
         totalPages : 4
   }
 }
 
-  export type ProjectListresponse ={
-    projectList : ProjectResponse[],
-    totalPages : number,
-  }
+export const createOrEditProject = async(project: ProjectRequest) => {
+  //throw new Error("Thrown from thisThrows()");
+  return Promise.resolve();
+
+}
+
+export type ProjectListresponse ={
+  projectList : ProjectResponse[],
+  totalPages : number,
+}
 
 export interface ProjectResponse  extends GetProjectByIdResponse{
 } 

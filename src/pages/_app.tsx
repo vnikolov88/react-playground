@@ -1,17 +1,15 @@
 import Navbar from "../components/Navbar";
 import { Outlet, Route, Router, Routes } from "react-router-dom";
-import EditProjectPage, { CreateProjectPage } from "./projects/_components/[projectId]";
+import EditProjectPage from "./projects/[projectId]";
 
 function App() {
 
   return (
     <>
+    <div className="container max-w-screen-xl mx-auto px-5">
       <Navbar />
       <Outlet/>
-      <Routes >
-        <Route path="projects/new"  element={<CreateProjectPage/>}></Route>
-        <Route path="projects/:projectId/edit" element={<EditProjectPage/>}> </Route>
-      </Routes>
+      </div>
     </>
   )
 }
