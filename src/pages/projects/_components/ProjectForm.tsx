@@ -118,7 +118,7 @@ const ProjectForm = ({ projectId }: Props) => {
               Something are wrong with your project, please check your fields or contact System Administrator</p>
             </div>}
             {isSubmitSuccessful && !error && <div className="mt-4">  <p className="text-green-600">
-              sucess</p>
+            Your project has been successfully saved</p>
             </div>}
             <div className="float mt-4 space-x-4">
               <div className="float-left">
