@@ -14,7 +14,7 @@ axios.defaults.headers.get['Access-Control-Allow-Origin'] = 'http://localhost:51
 axios.defaults.headers.delete['Access-Control-Allow-Origin'] = 'http://localhost:5174';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
- 
+  <React.StrictMode>
     <Routes />
-
+  </React.StrictMode>
 )
