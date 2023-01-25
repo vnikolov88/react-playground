@@ -19,8 +19,8 @@ const List = () => {
 
     return (
         <>
-            {data != null &&
-                <ProjectList projectList={data?.projectList} deleteProject={deleteProj} />}
+            {data != null && !isLoading &&
+                <ProjectList projects={data?.projects} deleteProject={deleteProj} />}
             {isLoading && <Loading />}
 
             <div className="flow-root mt-4">
@@ -30,7 +30,7 @@ const List = () => {
                     </Link>
                 </div >
                 <div className="float-right">
-                    {data != null && <Pagination currentPage={currentPage}
+                    {data != null && data.totalPages > 0 && !isLoading && <Pagination currentPage={currentPage}
                         totalPages={data.totalPages}
                         setCurrentPage={setCurrentPage}
                     ></Pagination>

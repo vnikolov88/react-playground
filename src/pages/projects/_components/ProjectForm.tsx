@@ -22,16 +22,16 @@ const ProjectForm = ({ projectId }: Props) => {
     reset
   } = useForm<{
     id?: string;
-    name: string;
+    title: string;
     color: string;
   }>({
     defaultValues: {
-      name: data?.name,
+      title: data?.title,
       color: data?.color
     },
   });
 
-  const onSubmit = async (values: { id?: string; name: string; color: string; }) => {
+  const onSubmit = async (values: { id?: string; title: string; color: string; }) => {
     await upsertProject(values);
   };
 
@@ -55,7 +55,7 @@ const ProjectForm = ({ projectId }: Props) => {
   };
 
   const handleCancel = () => {
-    if (isDirty)
+    if (isDirty && !isSubmitSuccessful)
       handleDialog("You will lost the data", true, "Cancel confirmation");
     else {
       return navigate("/projects");
@@ -89,23 +89,24 @@ const ProjectForm = ({ projectId }: Props) => {
                 Name
               </label>
             </div>
-            <input placeholder="billing system zgt client" className="input input-bordered w-full "
-              {...register("name", {
+            <input placeholder="billing system zgt client" maxLength={50} className="input input-bordered w-full "
+              {...register("title", {
                 required: true,
-                maxLength: 20,
+                maxLength: 50,
               })}
             />
-            {errors?.name?.type === "required" && <p className="text-red-600">This field is required</p>}
-            {errors?.name?.type === "maxLength" && (
-              <p className="text-red-600">First name cannot exceed 20 characters</p>
+            {errors?.title?.type === "required" && <p className="text-red-600">This field is required</p>}
+            {errors?.title?.type === "maxLength" && (
+              <p className="text-red-600">Title cannot exceed 50 characters</p>
             )}
             <div className="mt-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Color
               </label>
-              <input placeholder="#000" className="input input-bordered w-full max-w-xs"
+              <input placeholder="#000" maxLength={7} className="input input-bordered w-full max-w-xs"
                 {...register("color", {
                   required: true,
+                  maxLength: 7,
                   pattern: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i
                 })
                 } />

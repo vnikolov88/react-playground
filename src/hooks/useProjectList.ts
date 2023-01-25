@@ -10,24 +10,30 @@ export const useProjectList = (page: number, size: number) => {
 
 
   const deleteProj = async (id: string) => {
-    deleteProject(id).catch((error) => {
+    deleteProject(id)
+    .then(function (){
+      getProjects();
+    }).catch((error) => {
       setError(error);
     });
-    getProjects();
+   
   };
 
   useEffect(() => {
-    getProjects();
+      getProjects();
+    
   }, [page]);
 
-  async function getProjects() {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setProjectList(await getProjectList(page, size));
+  const getProjects = async () =>  {
+    setIsLoading(true);
+      await getProjectList(page, size)
+      .then(function (response){
+        setProjectList(response);
+      })
+      .catch(function(error){
+        setError(error);
+      });
       setIsLoading(false);
-    };
-
-    fetchData();
   }
 
   return {

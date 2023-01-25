@@ -13,7 +13,12 @@ export const useProject = (id?: string) => {
 
     const fetchData = async () => {
       setIsLoading(true);
-      setProject(await getProjecyById(id));
+      await getProjecyById(id)
+      .then(function (response){
+        setProject(response);
+      }).catch(function (error){
+        setError(error)
+      });
       setIsLoading(false);
     };
 
@@ -22,7 +27,7 @@ export const useProject = (id?: string) => {
 
   const upsertProject = async (project: {
     id?: string;
-    name: string;
+    title: string;
     color: string;
   }) => {
     setIsLoading(true);
