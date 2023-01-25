@@ -1,17 +1,29 @@
+import { useState } from "react";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
+
 export default function Navbar() {
+  
+    
     return (
-        <nav className="bg-purple-700 text-white flex justify-between items-start gap-2 text-xl">
-            <a href="/" className="text-right font-bold">
-                React Playground
-            </a>
-            <ul className="list-none flex gap-1">
-                <li>
-                    <a href="/projects">Projects</a>
-                </li>
-                <li>
-                    <a href="/people">People</a>
-                </li>
-            </ul>
-        </nav>
-    )
-}
+        <div className="tabs items-center justify-center">
+            <CustomLink to="/projects">Projects</CustomLink>
+            <CustomLink to="/people">People</CustomLink>
+        </div>
+      )
+    }
+    
+    function CustomLink({to, children } : Pagination)  {
+      const resolvedPath = useResolvedPath(to)
+      const isActive = useMatch({ path: resolvedPath.pathname+"/*" })
+    
+      return (
+        <a className={isActive != null ? "tab tab-bordered tab-active" : "tab tab-bordered"} href={to}>
+          {children}
+        </a>
+      )
+    }
+
+    type Pagination = {
+        to: string;
+        children: string
+    };

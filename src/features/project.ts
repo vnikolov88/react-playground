@@ -1,54 +1,49 @@
+import axios, { Axios } from 'axios';
+
+
 export const getProjecyById = async (id: string): Promise<GetProjectByIdResponse> => {
-    //TODO get from backend
-    return {
-      id: "1",
-      name: "Person 1",
-      beginDate: "",
-    };
+    return axios.get('/projects/'+id).then(function (response){
+      return response.data;
+    });
   }
   
-  export type GetProjectByIdResponse = {
+  export interface ProjectRequest {
+    id?: string;
+    title: string;
+    color: string
+  }
+  
+  export interface  GetProjectByIdResponse {
     id: string;
-    name: string;
-    beginDate: String;
-    endDate?: String;
+    title: string;
+    color: string
   };
 
-export const getProjectList = async (page: number, size: number) : Promise<ProjectListresponse> =>{
 
-    return {
-        projectList:  [
-            {
-                id: "1",
-                name: "Project 1",
-                beginDate: ""
-            },
-            {
-                id: "2",
-                name: "project 4",
-                beginDate: ""
-            },
-            {
-                id: "3",
-                name: "project 5",
-                beginDate: ""
-            },
-        ],
-        totalPages : 4
-  }
+export const getProjectList = async (page: number, size: number) : Promise<ProjectListresponse> => {
+   return axios.get('/projects/list?page=' + page + '&totalItemsPerPage=' + size)
+    .then(function (response) {
+        return response.data; 
+    });
 }
 
-  export type ProjectListresponse ={
-    projectList : ProjectResponse[],
-    totalPages : number,
-  }
+export const createOrEditProject = async(project: ProjectRequest) => {
+  return axios.post('/projects', project);
+}
 
-export interface ProjectResponse  extends GetProjectByIdResponse{
+export type ProjectListresponse = {
+  projects : ProjectResponse[],
+  totalPages : number,
+}
+
+export interface ProjectResponse {
+  id: string;
+  title: string;
+  color: string
 } 
 
-export const deleteProject = async (id: string) => {
-  return Promise.resolve;
-       
+export const deleteProjectCall = async (id: string) => {
+  return axios.delete('/projects?id='+id)
 }
 
 

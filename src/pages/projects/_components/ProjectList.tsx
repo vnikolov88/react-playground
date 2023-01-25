@@ -1,55 +1,90 @@
-import { faEdit, faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { mdiDelete, mdiSquareEditOutline } from "@mdi/js";
+import Icon from "@mdi/react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ProjectListresponse, ProjectResponse } from "../../../features/project";
+import Modal from "../../../components/Modal";
+import { ProjectResponse } from "../../../features/project";
 
 type Props = {
-    projectList: ProjectResponse[], 
+    projects: ProjectResponse[],
     deleteProject: (id: string) => void
 };
 
-const ProjectList = ({projectList, deleteProject}: Props) => {
-    const projects = projectList;
-    
-    
-    
-    return (  
-        <table >
-            <thead>
-                <tr>
-                    <th scope='col'>Id</th>
-                    <th scope='col'>Project Name</th>
-                    <th scope='col'>Begin Date</th>
-                    <th scope='col'>End Date</th>
-                    <th scope='col'>Edit</th>
-                    <th scope='col'>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                    {projects.map(item => (
+const ProjectList = ({ projects, deleteProject }: Props) => {
+    const projectList = projects
+    const [itemIdToDelete, setItemIdToDelete] = useState<string | null>(null);
+
+    const [dialog, setDialog] = useState({
+        message: "",
+        openModal: false,
+        item: "",
+        title: ""
+    });
+
+    var projectId: string;
+    const handleDialog = (message: string, openModal: boolean, item: string, title: string) => {
+        setDialog({
+            message,
+            openModal,
+            item,
+            title
+        });
+    };
+
+    const handleDelete = (name: string, id?: string) => {
+        handleDialog("Are you sure you want to delete", true, name, "Delete Project Confirmation");
+        if (id)
+            setItemIdToDelete(id);
+    };
+
+    const areUSureDelete = (choose: boolean) => {
+        if (choose && itemIdToDelete) {
+            deleteProject(itemIdToDelete);
+        }
+        handleDialog("", false, "", "");
+    };
+
+    return (
+        <>
+            <table className="table w-full border-b border-gray-200 shadow rounded-t-lg" >
+                <thead>
+                    <tr>
+                        <th scope='col'>Id</th>
+                        <th scope='col'>Project Title</th>
+                        <th scope='col'>Project Color</th>
+                        <th scope='col'>Edit</th>
+                        <th scope='col'>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {projectList.map(item => (
                         <tr key={item.id}>
                             <td >{item.id} </td>
-                            <td>{item.name} </td>
-                            <td>{item.beginDate}</td>
-                            <td>{item.endDate}</td>
-                            <td>{item.endDate}</td>
+                            <td>{item.title} </td>
+                            <td>{item.color}</td>
                             <td>
-                                <Link to={item.id+"/edit"} >
-                                    <FontAwesomeIcon icon={faEdit} />
+                                <Link to={item.id} >
+                                    <Icon path={mdiSquareEditOutline} size={1} />
                                 </Link>
                             </td>
                             <td>
-                                <button onClick={()=> deleteProject(item.id)}>
-                                    <FontAwesomeIcon icon={faTrash} />
+                                <button onClick={() => handleDelete(item.title, item.id)}>
+                                    <Icon path={mdiDelete} size={1} />
                                 </button>
                             </td>
                         </tr>
                     ))}
-            </tbody>
-        </table>
-        ) 
+                </tbody>
 
+            </table>
+            {dialog.openModal && <Modal
+                item={dialog.item}
+                setChoice={areUSureDelete}
+                message={dialog.message}
+                title={dialog.title}
+            />}
+        </>
+    )
 };
 
 export default ProjectList
