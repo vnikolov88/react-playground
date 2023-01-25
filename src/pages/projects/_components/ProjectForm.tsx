@@ -82,14 +82,14 @@ const ProjectForm = ({ projectId }: Props) => {
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 id
               </label>
-            </div><input disabled={true} defaultValue={data?.id} className="input input-bordered w-full "
+            </div><input disabled={true} defaultValue={data?.id} className="input input-bordered w-full"
               /></>}
             <div className="mt-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Name
               </label>
             </div>
-            <input placeholder="billing system zgt client" maxLength={50} className="input input-bordered w-full "
+            <input placeholder="billing system zgt client" maxLength={50} className="input input-bordered w-full"
               {...register("title", {
                 required: true,
                 maxLength: 50,

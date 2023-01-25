@@ -20,7 +20,7 @@ export const getProjecyById = async (id: string): Promise<GetProjectByIdResponse
   };
 
 
-export const getProjectList = async (page: number, size: number) : Promise<ProjectListresponse>=>{
+export const getProjectList = async (page: number, size: number) : Promise<ProjectListresponse> => {
    return axios.get('/projects/list?page=' + page + '&totalItemsPerPage=' + size)
     .then(function (response) {
         return response.data; 
@@ -31,7 +31,7 @@ export const createOrEditProject = async(project: ProjectRequest) => {
   return axios.post('/projects', project);
 }
 
-export type ProjectListresponse ={
+export type ProjectListresponse = {
   projects : ProjectResponse[],
   totalPages : number,
 }
@@ -42,7 +42,7 @@ export interface ProjectResponse {
   color: string
 } 
 
-export const deleteProject = async (id: string) => {
+export const deleteProjectCall = async (id: string) => {
   return axios.delete('/projects?id='+id)
 }
 

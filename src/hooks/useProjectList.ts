@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteProject, getProjectList, ProjectListresponse } from "../features/project";
+import { deleteProjectCall, getProjectList, ProjectListresponse } from "../features/project";
 
 
 export const useProjectList = (page: number, size: number) => {
@@ -8,15 +8,13 @@ export const useProjectList = (page: number, size: number) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [projectList, setProjectList] = useState<ProjectListresponse>();
 
-
-  const deleteProj = async (id: string) => {
-    deleteProject(id)
+  const deleteProject = async (id: string) => {
+    deleteProjectCall(id)
     .then(function (){
       getProjects();
     }).catch((error) => {
       setError(error);
     });
-   
   };
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export const useProjectList = (page: number, size: number) => {
   }
 
   return {
-    deleteProj,
+    deleteProject,
     data: projectList,
     isLoading,
     error

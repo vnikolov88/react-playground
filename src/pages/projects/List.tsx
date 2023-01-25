@@ -11,7 +11,7 @@ import ProjectList from "./_components/ProjectList";
 const List = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const size = 10
-    const { data, isLoading, error, deleteProj } = useProjectList(currentPage, size);
+    const { data, isLoading, error, deleteProject } = useProjectList(currentPage, size);
 
     if (error) {
         return <div>{error.message}</div>;
@@ -20,7 +20,7 @@ const List = () => {
     return (
         <>
             {data != null && !isLoading &&
-                <ProjectList projects={data?.projects} deleteProject={deleteProj} />}
+                <ProjectList projects={data?.projects} deleteProject={deleteProject} />}
             {isLoading && <Loading />}
 
             <div className="flow-root mt-4">

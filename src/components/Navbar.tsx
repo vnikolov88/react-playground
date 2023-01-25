@@ -17,7 +17,7 @@ export default function Navbar() {
       const isActive = useMatch({ path: resolvedPath.pathname+"/*" })
     
       return (
-        <a className={ isActive != null ? "tab tab-bordered tab-active" : "tab tab-bordered"} href={to}>
+        <a className={isActive != null ? "tab tab-bordered tab-active" : "tab tab-bordered"} href={to}>
           {children}
         </a>
       )

@@ -22,12 +22,9 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }: Pagination) => 
                 <button key={pgNumber} onClick={() => setCurrentPage(pgNumber)}
 
                     className={`btn ${currentPage == pgNumber ? 'btn-active' : ''} `}>{pgNumber}</button>
-
             ))}
             <button className="btn" onClick={nextPage}>»</button>
-
         </div>
     )
 }
-
 export default Pagination
